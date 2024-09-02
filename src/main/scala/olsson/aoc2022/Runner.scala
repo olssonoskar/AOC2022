@@ -1,16 +1,33 @@
 package olsson.aoc2022
 
+import java.io.FileNotFoundException
+
 object Runner {
 
   @main
   def main(args: String*): Unit = {
-    output(1, Day01().part1(), Day01().part2())
-    output(2, Day02().part1(), Day02().part2())
-    output(3, Day03().part1(), Day03().part2())
+    days
+      .filter(_.day == 5)
+      .foreach(output)
+
   }
 
-  private def output(day: Int, part1: String, part2: String): Unit = {
-    Console.println(s"Day $day: $part1 & $part2")
+  private type DayResult = String | Int | Long // Scala 3 union
+
+  private def output(execution: Execution): Unit = {
+    val part1 = execution.part1()
+    val part2 = execution.part2()
+    Console.println(s"Day ${execution.day}: $part1 & $part2")
   }
+
+  private val days: List[Execution] = List(
+    Execution(1, () => Day01().part1(), () => Day01().part2()),
+    Execution(2, () => Day02().part1(), () => Day02().part2()),
+    Execution(3, () => Day03().part1(), () => Day03().part2()),
+    Execution(4, () => Day04().part1(), () => Day04().part2()),
+    Execution(5, () => Day05().part1(), () => Day05().part2()),
+  )
+
+  private case class Execution(day: Int, part1: () => DayResult, part2: () => DayResult)
 
 }

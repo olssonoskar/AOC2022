@@ -2,14 +2,14 @@ package olsson.aoc2022
 class Day01 extends InputReader {
 
   def part1(): String = {
-    summary().sorted.max.toString
-  }
-  
-  def part2(): String = {
-    summary().sorted.reverse.take(3).sum.toString
+    summary.sorted.max.toString
   }
 
-  private def summary() = {
+  def part2(): String = {
+    summary.sorted.reverse.take(3).sum.toString
+  }
+
+  private def summary: List[Int] = {
     val input = readLines("day01.txt")
     val inventories = List.newBuilder[Int]
     var sum = 0
