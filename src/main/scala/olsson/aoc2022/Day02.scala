@@ -59,11 +59,3 @@ class Day02 extends InputReader {
     }
   }
 }
-
-object Day02 {
-
-  def main(args: Array[String]): Unit = {
-    println(new Day02().part1())
-    println(new Day02().part2())
-  }
-}

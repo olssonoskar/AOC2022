@@ -44,11 +44,3 @@ class Day03 extends InputReader {
   private case class Group(first: String, second: String, third: String)
 
 }
-
-object Day03 {
-
-  def main(args: Array[String]): Unit = {
-    println(new Day03().part1())
-    println(new Day03().part2())
-  }
-}
