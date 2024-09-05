@@ -1,4 +1,4 @@
-import olsson.aoc2022.{Day02, Day03, Day04, Day05, Day06, Day07, Day08}
+import olsson.aoc2022.{Day02, Day03, Day04, Day05, Day06, Day07, Day08, Day09}
 import org.scalatest.funsuite.AnyFunSuite
 
 class DayTests extends AnyFunSuite{
@@ -36,6 +36,10 @@ class DayTests extends AnyFunSuite{
   test("Day 8") {
     assert(new Day08().part1("day8_ex.txt") == 21)
     assert(new Day08().part2("day8_ex.txt") == 8)
+  }
+
+  test("Day 9") {
+    assert(new Day09().part1("day9_ex.txt") == 13)
   }
 
 }

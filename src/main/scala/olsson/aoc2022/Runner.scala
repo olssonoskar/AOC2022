@@ -26,6 +26,7 @@ object Runner {
     Execution(6, () => Day06().part1(), () => Day06().part2()),
     Execution(7, () => Day07().part1(), () => Day07().part2()),
     Execution(8, () => Day08().part1(), () => Day08().part2()),
+    Execution(9, () => Day09().part1(), () => Day09().part2()),
   )
 
   private case class Execution(day: Int, part1: () => DayResult, part2: () => DayResult)
