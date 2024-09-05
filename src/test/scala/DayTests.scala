@@ -40,6 +40,8 @@ class DayTests extends AnyFunSuite{
 
   test("Day 9") {
     assert(new Day09().part1("day9_ex.txt") == 13)
+    assert(new Day09().part2("day9_ex.txt") == 1)
+    assert(new Day09().part2("day9_ex_pt2.txt") == 36)
   }
 
 }
