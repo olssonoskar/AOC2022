@@ -14,7 +14,12 @@ object Runner {
   private def output(execution: Execution): Unit = {
     val part1 = execution.part1()
     val part2 = execution.part2()
-    Console.println(s"Day ${execution.day}: $part1 & $part2")
+    part2 match
+      case s: String if s.contains(System.getProperty("line.separator")) =>
+        println(s"Day ${execution.day}: $part1 &  part 2 ↓")
+        println(s)
+      case _ => println(s"Day ${execution.day}: $part1 & $part2")
+
   }
 
   private val days: List[Execution] = List(
@@ -27,6 +32,7 @@ object Runner {
     Execution(7, () => Day07().part1(), () => Day07().part2()),
     Execution(8, () => Day08().part1(), () => Day08().part2()),
     Execution(9, () => Day09().part1(), () => Day09().part2()),
+    Execution(10, () => Day10().part1(), () => Day10().part2()),
   )
 
   private case class Execution(day: Int, part1: () => DayResult, part2: () => DayResult)

@@ -1,4 +1,4 @@
-import olsson.aoc2022.{Day02, Day03, Day04, Day05, Day06, Day07, Day08, Day09}
+import olsson.aoc2022.{Day02, Day03, Day04, Day05, Day06, Day07, Day08, Day09, Day10}
 import org.scalatest.funsuite.AnyFunSuite
 
 class DayTests extends AnyFunSuite{
@@ -25,7 +25,7 @@ class DayTests extends AnyFunSuite{
 
   test("Day 6") {
     assert(new Day06().part1("day6_ex.txt") == 11)
-    assert(new Day06().part2("day6_ex.txt") == 0)
+    assert(new Day06().part2("day6_ex.txt") == 26)
   }
 
   test("Day 7") {
@@ -44,4 +44,17 @@ class DayTests extends AnyFunSuite{
     assert(new Day09().part2("day9_ex_pt2.txt") == 36)
   }
 
+  test("Day 10") {
+    assert(new Day10().part1("day10_ex.txt") == 13140)
+
+    val expected =
+      """##..##..##..##..##..##..##..##..##..##..
+        |###...###...###...###...###...###...###.
+        |####....####....####....####....####....
+        |#####.....#####.....#####.....#####.....
+        |######......######......######......####
+        |#######.......#######.......#######.....""".stripMargin
+    val result = new Day10().part2("day10_ex.txt")
+    assert(result == expected)
+  }
 }
