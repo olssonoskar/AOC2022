@@ -5,7 +5,7 @@ object Runner {
   @main
   def main(args: String*): Unit = {
     days
-      //.filter(_.day == 7)
+      .filter(_.day == 13)
       .foreach(output)
   }
 
@@ -33,6 +33,9 @@ object Runner {
     Execution(8, () => Day08().part1(), () => Day08().part2()),
     Execution(9, () => Day09().part1(), () => Day09().part2()),
     Execution(10, () => Day10().part1(), () => Day10().part2()),
+    Execution(11, () => Day11().part1(), () => Day11().part2()),
+    Execution(12, () => Day12().part1(), () => Day12().part2()),
+    Execution(13, () => Day13().part1(), () => Day13().part2()),
   )
 
   private case class Execution(day: Int, part1: () => DayResult, part2: () => DayResult)
