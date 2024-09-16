@@ -1,7 +1,8 @@
-import olsson.aoc2022.{Day02, Day03, Day04, Day05, Day06, Day07, Day08, Day09, Day10, Day11}
+import olsson.aoc2022.Day13.Result._
+import olsson.aoc2022.{Day02, Day03, Day04, Day05, Day06, Day07, Day08, Day09, Day10, Day11, Day12, Day13}
 import org.scalatest.funsuite.AnyFunSuite
 
-class DayTests extends AnyFunSuite{
+class DayTests extends AnyFunSuite {
 
   test("Day 2") {
     assert(new Day02().part1("day2_ex.txt") == "15")
@@ -64,5 +65,29 @@ class DayTests extends AnyFunSuite{
 
   test("Day 11 Part 2") {
     assert(new Day11().part2("day11_ex.txt") == 2713310158L)
+  }
+
+  test("Day 12 Part 1") {
+    assert(new Day12().part1("day12_ex.txt") == 31)
+  }
+
+  test("Day 12 Part 2") {
+    assert(new Day12().part2("day12_ex.txt") == 29)
+  }
+
+  test("day 13 Part 1") {
+    assert(new Day13().part1("day13_ex.txt") == 13)
+  }
+
+  test("day 13 Part 2") {
+    assert(new Day13().part2("day13_ex.txt") == 140)
+  }
+
+  test("day 13 regex") {
+    val regex = "((?=[\\[\\],])|(?<=[\\[\\],]))"
+    val test = "[[],[[0,[10,1]],3,[4]]]"
+    val result = test.split(regex).filter(_ != ",")
+    val expected = Array("[", "[", "]", "[", "[", "0", "[", "10", "1", "]", "]", "3", "[", "4", "]", "]", "]")
+    assert(result.mkString("Array(", ", ", ")") == expected.mkString("Array(", ", ", ")"))
   }
 }
