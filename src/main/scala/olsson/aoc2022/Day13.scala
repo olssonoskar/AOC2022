@@ -1,8 +1,5 @@
 package olsson.aoc2022
 
-import olsson.aoc2022.Day13.Result
-import olsson.aoc2022.Day13.Result.*
-
 import scala.collection.mutable.ListBuffer
 
 class Day13 extends InputReader {
@@ -23,15 +20,15 @@ class Day13 extends InputReader {
     parseInput(readLines(file))
       .grouped(2).toList
       .map(grp => evaluate(grp.head, grp.last))
-      .zipWithIndex.filter(_._1 == CORRECT)
+      .zipWithIndex.filter(_._1 == Result.CORRECT)
       .map(_._2 + 1)
       .sum
   }
 
   def part2(file: String = "day13.txt"): Int = {
-    val dividers = parseInput(List("[[2]]","[[6]]"))
+    val dividers = parseInput(List("[[2]]", "[[6]]"))
     val sorted = (dividers ::: parseInput(readLines(file)))
-      .sortWith((left, right) => evaluate(left, right) == CORRECT)
+      .sortWith((left, right) => evaluate(left, right) == Result.CORRECT)
     sorted.zipWithIndex
       .filter(sorted => dividers.contains(sorted._1))
       .map(_._2 + 1)
@@ -47,7 +44,7 @@ class Day13 extends InputReader {
   // Recursively parse lists from input into wrapper objects
   private def parseArrays(in: Iterator[String]): Wrapper = {
     val collected = ListBuffer[Wrapper]()
-    while(in.hasNext)
+    while (in.hasNext)
       in.next() match
         case "]" => return ListWrapper(collected.toList)
         case "[" => collected.append(parseArrays(in))
@@ -58,21 +55,21 @@ class Day13 extends InputReader {
   private def compareList(left: ListWrapper, right: ListWrapper): Result = {
     val result = left.sub.lazyZip(right.sub)
       .map(evaluate)
-      .find(_ != UNDETERMINED)
+      .find(_ != Result.UNDETERMINED)
     result match
       case Some(res) => res
-      case None if left.sub.length < right.sub.length => CORRECT
-      case None if left.sub.length > right.sub.length => INCORRECT
-      case None => UNDETERMINED
+      case None if left.sub.length < right.sub.length => Result.CORRECT
+      case None if left.sub.length > right.sub.length => Result.INCORRECT
+      case None => Result.UNDETERMINED
   }
 
   private def compareInt(left: IntWrapper, right: IntWrapper): Result = {
     if left.num < right.num then
-      CORRECT
+      Result.CORRECT
     else if left.num > right.num then
-      INCORRECT
+      Result.INCORRECT
     else
-      UNDETERMINED
+      Result.UNDETERMINED
   }
 
   private def evaluate(left: Wrapper, right: Wrapper): Result = {
@@ -85,12 +82,12 @@ class Day13 extends InputReader {
   }
 
   private sealed abstract class Wrapper
+
   private case class IntWrapper(num: Int) extends Wrapper
+
   private case class ListWrapper(sub: List[Wrapper]) extends Wrapper
 
-}
-object Day13 {
-  enum Result {
+  private enum Result {
     case CORRECT, INCORRECT, UNDETERMINED
   }
 }

@@ -1,5 +1,4 @@
-import olsson.aoc2022.Day13.Result._
-import olsson.aoc2022.{Day02, Day03, Day04, Day05, Day06, Day07, Day08, Day09, Day10, Day11, Day12, Day13}
+import olsson.aoc2022.{Day02, Day03, Day04, Day05, Day06, Day07, Day08, Day09, Day10, Day11, Day12, Day13, Day14}
 import org.scalatest.funsuite.AnyFunSuite
 
 class DayTests extends AnyFunSuite {
@@ -89,5 +88,13 @@ class DayTests extends AnyFunSuite {
     val result = test.split(regex).filter(_ != ",")
     val expected = Array("[", "[", "]", "[", "[", "0", "[", "10", "1", "]", "]", "3", "[", "4", "]", "]", "]")
     assert(result.mkString("Array(", ", ", ")") == expected.mkString("Array(", ", ", ")"))
+  }
+
+  test("Day 14 Part 1") {
+    assert(new Day14().part1("day14_ex.txt") == 24)
+  }
+
+  test("Day 14 Part 2") {
+    assert(new Day14().part2("day14_ex.txt") == 93)
   }
 }

@@ -2,48 +2,34 @@ package olsson.aoc2022.util
 
 import scala.collection.mutable
 
-// Generic A* like search
-// Will be kept as a blueprint for solutions that might require pathfinding but with some additional constraints
-// Implemented for day 12
-class GridSearch(searchNode: Option[(Int, Int)] = None, grid: Array[Array[Char]]) {
+/** 
+ * A* (A Star) like search in 2D Array.
+ */
 
-  private val start = lookup('S').head
-  private val goal = lookup('E').head
+class GridSearch(start: Point, goal: Point, grid: Seq[Array[Char]]) {
+
   private val lengthBetween = (p1: Point, p2: Point) => Math.abs(p1.x - p2.x) + Math.abs(p1.y - p2.y) // Sort by 'step' distance
   private implicit val pointOrder: Ordering[Point] = Ordering.by(p => lengthBetween(p, goal)).reverse // Reversed to get the shortest path
   private val explore: mutable.PriorityQueue[Point] = mutable.PriorityQueue.from(List(start)) // Nodes to evaluate
   private val pathToNode: mutable.HashMap[Point, List[Point]] = mutable.HashMap.empty // Map containing the shortest path to node in key
-
+  private val candidateLength = () => pathToNode.get(goal).map(_.count(_ => true)).getOrElse(Int.MaxValue)
   pathToNode.put(start, List.empty)
 
   def traverse(): List[Point] = {
     while (explore.nonEmpty) {
       val current = explore.dequeue()
       val path = pathToNode.getOrElse(current, List.empty)
-      current.neighbors
-        .filter(onGrid) // Only consider spots in the grid
-        .filter(p => climbable(p, current)) // Only consider climbing 1 level or special nodes such as goal
-        .foreach(p => updatePath(p, p :: path))
+      if(path.count(_ => true) < candidateLength()) {   // Stop exploration if the current path is longer than our candidate
+        current.neighbors
+          .filter(onGrid) // Only consider spots in the grid
+          .foreach(p => updatePath(p, p :: path))
+      }
     }
-    pathToNode.getOrElse(goal, List.empty)
+    start :: pathToNode.getOrElse(goal, List.empty)
   }
 
   private def onGrid(p: Point): Boolean = p.x >= 0 && p.x <= (grid.head.length - 1) && p.y >= 0 && p.y <= (grid.length - 1)
-
-  private def climbable(p: Point, current: Point): Boolean = {
-    val elevation = readGrid(current)
-    val nextElevation = readGrid(p)
-    nextElevation == 'a' || (nextElevation.toInt <= (elevation + 1))
-  }
-
-  private def readGrid(point: Point, setup: Boolean = false): Char = {
-    val c = grid(point.y)(point.x)
-    c match {
-      case 'E' if !setup => 'z'
-      case 'S' if !setup => 'a'
-      case _ => c
-    }
-  }
+  private def readGrid(point: Point, setup: Boolean = false): Char = grid(point.y)(point.x)
 
   private def lookup(c: Char): Seq[Point] = {
     for
@@ -62,17 +48,6 @@ class GridSearch(searchNode: Option[(Int, Int)] = None, grid: Array[Array[Char]]
       if (!explore.exists(p => p == point)) {
         explore.enqueue(point)
       }
-    }
-  }
-
-  case class Point(x: Int, y: Int) {
-    def neighbors: List[Point] = {
-      List(
-        Point(x + 1, y),
-        Point(x - 1, y),
-        Point(x, y + 1),
-        Point(x, y - 1),
-      )
     }
   }
 

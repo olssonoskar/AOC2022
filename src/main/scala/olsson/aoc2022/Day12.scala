@@ -35,6 +35,7 @@ class Day12 extends InputReader {
     private implicit val pointOrder: Ordering[Point] = Ordering.by(p => lengthBetween(p, goal)).reverse // Reversed to get the shortest path
     private val explore: mutable.PriorityQueue[Point] = mutable.PriorityQueue.from(List(start)) // Nodes to evaluate
     private val pathToNode: mutable.HashMap[Point, List[Point]] = mutable.HashMap.empty // Map containing the shortest path to node in key
+    private val candidateLength = () => pathToNode.get(goal).map(_.count(_ => true)).getOrElse(Int.MaxValue)
 
     pathToNode.put(start, List.empty)
 
@@ -42,10 +43,12 @@ class Day12 extends InputReader {
       while (explore.nonEmpty) {
         val current = explore.dequeue()
         val path = pathToNode.getOrElse(current, List.empty)
-        current.neighbors
-          .filter(onGrid) // Only consider spots in the grid
-          .filter(p => climbable(p, current)) // Only consider climbing 1 level or special nodes such as goal
-          .foreach(p => updatePath(p, p :: path))
+        if(path.count(_ => true) < candidateLength()) {
+          current.neighbors
+            .filter(onGrid) // Only consider spots in the grid
+            .filter(p => climbable(p, current)) // Only consider climbing 1 level or special nodes such as goal
+            .foreach(p => updatePath(p, p :: path))
+        }
       }
       pathToNode.getOrElse(goal, List.empty)
     }
