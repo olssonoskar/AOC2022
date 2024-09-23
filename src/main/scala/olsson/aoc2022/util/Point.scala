@@ -17,6 +17,8 @@ case class Point(x: Int, y: Int) {
       Point(x + 1, y + 1),
     )
   }
+
+  def lengthTo(other: Point): Int = Math.abs(x - other.x) + Math.abs(y - other.y)
 }
 object Point {
   def from(point: (Int, Int)): Point = {
